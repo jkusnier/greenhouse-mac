@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var mainTimer:NSTimer?
     let statusBar = NSStatusBar.systemStatusBar()
     let statusBarItem : NSStatusItem
-    let menu: NSMenu = NSMenu()
+    let menu = NSMenu()
     let lastUpdatedItem : NSMenuItem = NSMenuItem()
     
     override init () {
@@ -49,16 +49,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func updateTitle() {
         var error: NSError?
-        let jsonData = NSData(contentsOfURL: url!)
-        let jsonDict = NSJSONSerialization.JSONObjectWithData(jsonData!, options: nil, error: &error) as NSDictionary
+        let jsonDict = NSJSONSerialization.JSONObjectWithData(NSData(contentsOfURL: url!)!, options: nil, error: &error) as NSDictionary
         
         if (error != nil) {
             statusBarItem.title = "--°"
         } else {
-            let fahrenheit:Double = jsonDict["fahrenheit"] as Double
-            statusBarItem.title = String(format: "%.1f°", fahrenheit)
-            let date:NSDate = NSDate(dateString: jsonDict["published_at"] as String)
-            lastUpdatedItem.title = date.localFormat()
+            statusBarItem.title = String(format: "%.1f°", jsonDict["fahrenheit"] as Double)
+            lastUpdatedItem.title = NSDate(dateString: jsonDict["published_at"] as String).localFormat()
         }
     }
 }
