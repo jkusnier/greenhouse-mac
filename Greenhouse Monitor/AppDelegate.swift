@@ -42,9 +42,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(aNotification: NSNotification) {
     }
     
-    func resetTimer(notification: NSNotification) {
+    func resetTimer(aNotification: NSNotification) {
         mainTimer?.invalidate()
-        mainTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: Selector("updateTitle:"), userInfo: nil, repeats: true)
+        mainTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: Selector("updateTitle"), userInfo: nil, repeats: true)
     }
     
     func updateTitle() {
