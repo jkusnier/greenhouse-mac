@@ -16,17 +16,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let url = NSURL(string: "http://api.weecode.com/greenhouse/v1/devices/50ff6c065067545628550887/environment")
 
     var mainTimer:NSTimer?
-    var statusBar = NSStatusBar.systemStatusBar()
-    var statusBarItem : NSStatusItem = NSStatusItem()
-    var menu: NSMenu = NSMenu()
-    var lastUpdatedItem : NSMenuItem = NSMenuItem()
+    let statusBar = NSStatusBar.systemStatusBar()
+    let statusBarItem : NSStatusItem
+    let menu: NSMenu = NSMenu()
+    let lastUpdatedItem : NSMenuItem = NSMenuItem()
+    
+    override init () {
+        statusBarItem = statusBar.statusItemWithLength(-1)
+        super.init()
+    }
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-
-        statusBarItem = statusBar.statusItemWithLength(-1)
         statusBarItem.menu = menu
-        statusBarItem.title = "--°"
-        
         menu.addItem(lastUpdatedItem)
         menu.addItemWithTitle("Quit", action: Selector("terminate:"), keyEquivalent: "")
         
@@ -56,7 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             let fahrenheit:Double = jsonDict["fahrenheit"] as Double
             statusBarItem.title = String(format: "%.1f°", fahrenheit)
-            var date:NSDate = NSDate(dateString: jsonDict["published_at"] as String)
+            let date:NSDate = NSDate(dateString: jsonDict["published_at"] as String)
             lastUpdatedItem.title = date.localFormat()
         }
     }
