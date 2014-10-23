@@ -11,6 +11,7 @@
 		965F045719F5E16B004BB15B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 965F045619F5E16B004BB15B /* Images.xcassets */; };
 		965F045A19F5E16B004BB15B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 965F045819F5E16B004BB15B /* MainMenu.xib */; };
 		965F046619F5E16C004BB15B /* Greenhouse_MonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965F046519F5E16C004BB15B /* Greenhouse_MonitorTests.swift */; };
+		965F047019F872C3004BB15B /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965F046F19F872C3004BB15B /* NSDateExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		965F045F19F5E16C004BB15B /* Greenhouse MonitorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Greenhouse MonitorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		965F046419F5E16C004BB15B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		965F046519F5E16C004BB15B /* Greenhouse_MonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Greenhouse_MonitorTests.swift; sourceTree = "<group>"; };
+		965F046F19F872C3004BB15B /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				965F045619F5E16B004BB15B /* Images.xcassets */,
 				965F045819F5E16B004BB15B /* MainMenu.xib */,
 				965F045219F5E16B004BB15B /* Supporting Files */,
+				965F046F19F872C3004BB15B /* NSDateExtension.swift */,
 			);
 			path = "Greenhouse Monitor";
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				965F047019F872C3004BB15B /* NSDateExtension.swift in Sources */,
 				965F045519F5E16B004BB15B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
