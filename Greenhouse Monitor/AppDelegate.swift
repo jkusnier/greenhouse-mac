@@ -30,7 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(lastUpdatedItem)
         menu.addItemWithTitle("Quit", action: Selector("terminate:"), keyEquivalent: "")
         
-        mainTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: Selector("updateTitle:"), userInfo: nil, repeats: true)
+        mainTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: Selector("updateTitle"), userInfo: nil, repeats: true)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "resetTimer:", name: NSSystemClockDidChangeNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "resetTimer:", name: NSWorkspaceDidWakeNotification, object: nil)
