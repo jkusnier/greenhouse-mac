@@ -13,7 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
     
-    let url = NSURL(string: "http://api.weecode.com/greenhouse/v1/devices/50ff6c065067545628550887/environment")
+    let url:NSURL = NSURL(string: "http://api.weecode.com/greenhouse/v1/devices/50ff6c065067545628550887/environment")!
 
     var mainTimer:NSTimer?
     let statusBar = NSStatusBar.systemStatusBar()
@@ -48,15 +48,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func updateTitle() {
+        var tempString = "--°"
         var error: NSError?
-        let jsonDict = NSJSONSerialization.JSONObjectWithData(NSData(contentsOfURL: url!)!, options: nil, error: &error) as NSDictionary
+        let jsonData = NSData(contentsOfURL: url)
+        if (jsonData != nil) {
+            let jsonDict = NSJSONSerialization.JSONObjectWithData(jsonData!, options: nil, error: &error) as NSDictionary
+
         
-        if (error != nil) {
-            statusBarItem.title = "--°"
-        } else {
-            statusBarItem.title = String(format: "%.1f°", jsonDict["fahrenheit"] as Double)
-            lastUpdatedItem.title = NSDate(dateString: jsonDict["published_at"] as String).localFormat()
+            if (error == nil) {
+                tempString = String(format: "%.1f°", jsonDict["fahrenheit"] as Double)
+                lastUpdatedItem.title = NSDate(dateString: jsonDict["published_at"] as String).localFormat()
+            }
         }
+        statusBarItem.title = tempString
     }
 }
 
