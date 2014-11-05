@@ -21,6 +21,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let menu = NSMenu()
     let lastUpdatedItem : NSMenuItem = NSMenuItem()
     
+    let messageDelay:Double = -300
+    var lastMessage:NSDate?
+    let floorTemp:Double = 34
+    let ceilTemp:Double = 85
+    
     override init () {
         statusBarItem = statusBar.statusItemWithLength(-1)
         super.init()
@@ -56,8 +61,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         
             if (error == nil) {
-                tempString = String(format: "%.1f°", jsonDict["fahrenheit"] as Double)
+                let fahrenheit = jsonDict["fahrenheit"] as Double
+                tempString = String(format: "%.1f°", fahrenheit)
                 lastUpdatedItem.title = NSDate(dateString: jsonDict["published_at"] as String).localFormat()
+                
+                let timeInterval:Double = (lastMessage == nil) ? 0 : lastMessage!.timeIntervalSinceNow
+                if ((fahrenheit <= floorTemp || fahrenheit >= ceilTemp) && (timeInterval == 0 || timeInterval <= messageDelay)) {
+                    var notification:NSUserNotification = NSUserNotification()
+                    notification.title = "Temperature Alert!"
+                    notification.informativeText = "Temperature at \(tempString)"
+                    
+                    notification.soundName = NSUserNotificationDefaultSoundName
+                    
+                    notification.deliveryDate = NSDate(timeIntervalSinceNow: 5)
+                    var notificationcenter:NSUserNotificationCenter = NSUserNotificationCenter.defaultUserNotificationCenter()
+                    if let notificationCenter = NSUserNotificationCenter.defaultUserNotificationCenter() as NSUserNotificationCenter? {
+                        notificationcenter.scheduleNotification(notification)
+                    }
+                    lastMessage = NSDate()
+                }
             }
         }
         statusBarItem.title = tempString
