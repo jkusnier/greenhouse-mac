@@ -72,11 +72,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     notification.informativeText = "Temperature at \(tempString)"
                     
                     notification.soundName = NSUserNotificationDefaultSoundName
-                    
-                    notification.deliveryDate = NSDate(timeIntervalSinceNow: 5)
-                    var notificationcenter:NSUserNotificationCenter = NSUserNotificationCenter.defaultUserNotificationCenter()
+
                     if let notificationCenter = NSUserNotificationCenter.defaultUserNotificationCenter() as NSUserNotificationCenter? {
-                        notificationcenter.scheduleNotification(notification)
+                        notificationCenter.scheduleNotification(notification)
                     }
                     lastMessage = NSDate()
                 }
