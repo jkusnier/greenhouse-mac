@@ -14,6 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
     
     let url:NSURL = NSURL(string: "http://api.weecode.com/greenhouse/v1/devices/50ff6c065067545628550887/environment")!
+    let webUrl:NSURL = NSURL(string: "http://greenhouse.weecode.com/#/device/50ff6c065067545628550887")!
 
     var mainTimer:NSTimer?
     let statusBar = NSStatusBar.systemStatusBar()
@@ -35,6 +36,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarItem.menu = menu
         menu.addItem(lastUpdatedItem)
         menu.addItemWithTitle("Quit", action: Selector("terminate:"), keyEquivalent: "")
+        
+        lastUpdatedItem.action = Selector("openWebView")
         
         mainTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: Selector("updateTitle"), userInfo: nil, repeats: true)
         
@@ -81,6 +84,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         statusBarItem.title = tempString
+    }
+    
+    func openWebView() {
+        NSWorkspace.sharedWorkspace().openURL(webUrl)
     }
 }
 
