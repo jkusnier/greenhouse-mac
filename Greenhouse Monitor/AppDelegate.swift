@@ -21,6 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let statusBarItem : NSStatusItem
     let menu = NSMenu()
     let lastUpdatedItem : NSMenuItem = NSMenuItem()
+    let lastHumidityItem: NSMenuItem = NSMenuItem()
     
     let messageDelay:Double = -300
     var lastMessage:NSDate?
@@ -35,6 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         statusBarItem.menu = menu
         menu.addItem(lastUpdatedItem)
+        menu.addItem(lastHumidityItem)
         menu.addItemWithTitle("Quit", action: Selector("terminate:"), keyEquivalent: "")
         
         lastUpdatedItem.action = Selector("openWebView")
@@ -57,6 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func updateTitle() {
         var tempString = "--°"
+        var humidityString = "---%"
         var error: NSError?
         let jsonData = NSData(contentsOfURL: url)
         if (jsonData != nil) {
@@ -66,6 +69,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if (error == nil) {
                 let fahrenheit = jsonDict["fahrenheit"] as Double
                 tempString = String(format: "%.1f°", fahrenheit)
+                humidityString = String(format: "%d%%", jsonDict["humidity"] as Int)
                 lastUpdatedItem.title = NSDate(dateString: jsonDict["published_at"] as String).localFormat()
                 
                 let timeInterval:Double = (lastMessage == nil) ? 0 : lastMessage!.timeIntervalSinceNow
@@ -84,6 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         statusBarItem.title = tempString
+        lastHumidityItem.title = humidityString
     }
     
     func openWebView() {
