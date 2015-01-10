@@ -24,6 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let lastHumidityItem: NSMenuItem = NSMenuItem()
     
     let messageDelay:Double = -300
+    var allowMessage = true
     var lastMessage:NSDate?
     let floorTemp:Double = 34
     let ceilTemp:Double = 85
@@ -71,9 +72,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 tempString = String(format: "%.1f°", fahrenheit)
                 humidityString = String(format: "%d%%", jsonDict["humidity"] as Int)
                 lastUpdatedItem.title = NSDate(dateString: jsonDict["published_at"] as String).localFormat()
+
+                if (!self.allowMessage && fahrenheit > floorTemp && fahrenheit < ceilTemp) {
+                    self.allowMessage = true
+                }
                 
                 let timeInterval:Double = (lastMessage == nil) ? 0 : lastMessage!.timeIntervalSinceNow
-                if ((fahrenheit <= floorTemp || fahrenheit >= ceilTemp) && (timeInterval == 0 || timeInterval <= messageDelay)) {
+                if ((fahrenheit <= floorTemp || fahrenheit >= ceilTemp) && (timeInterval == 0 || timeInterval <= messageDelay) && self.allowMessage) {
                     var notification:NSUserNotification = NSUserNotification()
                     notification.title = "Temperature Alert!"
                     notification.informativeText = "Temperature at \(tempString)"
@@ -84,6 +89,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         notificationCenter.scheduleNotification(notification)
                     }
                     lastMessage = NSDate()
+                    self.allowMessage = false
                 }
             }
         }
